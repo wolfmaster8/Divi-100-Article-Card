@@ -2,6 +2,7 @@ jQuery(document).ready(function ($) {
   if (!$('.divi-100-article-card').length) {
     return false;
   } else {
+  function fix_article_cart() {
     $('.et_pb_blog_grid').find('.et_pb_post').each(function() {
       var $this = $(this);
 
@@ -10,16 +11,6 @@ jQuery(document).ready(function ($) {
        */
       $this
         .addClass('article-card');
-
-      /**
-       * Get post link and wrap it around card
-       */
-      var postLink = $this.find('.entry-title a').attr('href');
-
-      $this.wrap(
-        $('<a href="' + postLink + '"/>')
-          .attr('href', postLink)
-      );
 
       /**
        * Creates content div and appends to post
@@ -159,17 +150,6 @@ jQuery(document).ready(function ($) {
       }
 
       /**
-       * If excerpt exist, append to content
-       */
-      $(this)
-        .find('.post-content')
-        .appendTo(
-          $(this)
-            .children()
-            .children('.article-card__excerpt')
-        );
-
-      /**
        * Hide excerpt by default on desktop
        */
       if ($(window).width() > 768) {
@@ -217,5 +197,10 @@ jQuery(document).ready(function ($) {
         });
       }
     });
+  }
+  fix_article_cart();
+  $( document ).ajaxComplete(function() {
+    fix_article_cart();
+  });
   }
 });
